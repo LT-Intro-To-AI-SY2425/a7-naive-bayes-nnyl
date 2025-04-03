@@ -9,7 +9,7 @@ class BayesClassifier:
         pos_freqs - dictionary of frequencies of positive words
         neg_freqs - dictionary of frequencies of negative words
         pos_filename - name of positive dictionary cache file
-        neg_filename - name of positive dictionary cache file
+        neg_filename - name of negative dictionary cache file
         training_data_directory - relative path to training directory
         neg_file_prefix - prefix of negative reviews
         pos_file_prefix - prefix of positive reviews
@@ -59,17 +59,19 @@ class BayesClassifier:
         # stored below is how you would load a file with filename given by `fName`
         # `text` here will be the literal text of the file (i.e. what you would see
         # if you opened the file in a text editor
-        # text = self.load_file(os.path.join(self.training_data_directory, fName))
-
+        # text = self.load_file(os.path.join(self.training_data_directory, files[0]))
+        # print(text)
 
         # *Tip:* training can take a while, to make it more transparent, we can use the
         # enumerate function, which loops over something and has an automatic counter.
         # write something like this to track progress (note the `# type: ignore` comment
         # which tells mypy we know better and it shouldn't complain at us on this line):
-        # for index, filename in enumerate(files, 1): # type: ignore
-        #     print(f"Training on file {index} of {len(files)}")
+        for index, filename in enumerate(files, 1): # type: ignore
+            print(f"Training on file {index} of {len(files)}")
         #     <the rest of your code for updating frequencies here>
-
+        text = self.load_file(os.path.join(self.training_data_directory, filename))
+        token = self.tokenize(text)
+        print(token)
 
         # we want to fill pos_freqs and neg_freqs with the correct counts of words from
         # their respective reviews
