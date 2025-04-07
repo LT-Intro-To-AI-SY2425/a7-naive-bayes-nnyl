@@ -70,8 +70,8 @@ class BayesClassifier:
             print(f"Training on file {index} of {len(files)}")
         #     <the rest of your code for updating frequencies here>
         text = self.load_file(os.path.join(self.training_data_directory, filename))
-        token = self.tokenize(text)
-        print(token)
+        tokens = self.tokenize(text)
+        # print(token)
 
         # we want to fill pos_freqs and neg_freqs with the correct counts of words from
         # their respective reviews
@@ -83,7 +83,11 @@ class BayesClassifier:
         # positive frequency dictionary. If it is neither a postive or negative file,
         # ignore it and move to the next file (this is more just to be safe; we won't
         # test your code with neutral reviews)
-        
+        if filename.startswith(self.pos_file_prefix):
+            self.update_dict(tokens, self.pos_freqs)
+        elif filename.startswith(self.neg_file_prefix):
+            self.update_dict(tokens, self.neg_freqs)
+
 
         # Updating frequences: to update the frequencies for each file, you need to get
         # the text of the file, tokenize it, then update the appropriate dictionary for
@@ -91,7 +95,7 @@ class BayesClassifier:
         # your life easier here. Write that function first then pass it your list of
         # tokens from the file and the appropriate dictionary
         
-
+        print(self.neg_freqs)
         # for debugging purposes, it might be useful to print out the tokens and their
         # frequencies for both the positive and negative dictionaries
         
@@ -100,6 +104,8 @@ class BayesClassifier:
         # avoid extra work in the future (using the save_dict method). The objects you
         # are saving are self.pos_freqs and self.neg_freqs and the filepaths to save to
         # are self.pos_filename and self.neg_filename
+        self.save_dict(self.pos_freqs, self.pos_filename)
+        self.save_dict(self.neg_freqs, self.neg_filename)
 
     def classify(self, text: str) -> str:
         """Classifies given text as positive, negative or neutral from calculating the
@@ -224,7 +230,11 @@ class BayesClassifier:
             freqs - dictionary of frequencies to update
         """
         # TODO: your work here
-        pass  # remove this line once you've implemented this method
+        for word in words:
+            if word in freqs:
+                freqs[word] += 1
+            else:
+                freqs[word] = 1
 
 
 if __name__ == "__main__":
