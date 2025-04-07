@@ -69,8 +69,8 @@ class BayesClassifier:
         for index, filename in enumerate(files, 1): # type: ignore
             print(f"Training on file {index} of {len(files)}")
         #     <the rest of your code for updating frequencies here>
-        text = self.load_file(os.path.join(self.training_data_directory, filename))
-        tokens = self.tokenize(text)
+            text = self.load_file(os.path.join(self.training_data_directory, filename))
+            tokens = self.tokenize(text)
         # print(token)
 
         # we want to fill pos_freqs and neg_freqs with the correct counts of words from
@@ -83,10 +83,10 @@ class BayesClassifier:
         # positive frequency dictionary. If it is neither a postive or negative file,
         # ignore it and move to the next file (this is more just to be safe; we won't
         # test your code with neutral reviews)
-        if filename.startswith(self.pos_file_prefix):
-            self.update_dict(tokens, self.pos_freqs)
-        elif filename.startswith(self.neg_file_prefix):
-            self.update_dict(tokens, self.neg_freqs)
+            if filename.startswith(self.pos_file_prefix):
+                self.update_dict(tokens, self.pos_freqs)
+            elif filename.startswith(self.neg_file_prefix):
+                self.update_dict(tokens, self.neg_freqs)
 
 
         # Updating frequences: to update the frequencies for each file, you need to get
@@ -239,7 +239,7 @@ class BayesClassifier:
 
 if __name__ == "__main__":
     # uncomment the below lines once you've implemented `train` & `classify`
-    # b = BayesClassifier()
+    b = BayesClassifier()
     # a_list_of_words = ["I", "really", "like", "this", "movie", ".", "I", "hope", \
     #                    "you", "like", "it", "too"]
     # a_dictionary = {}
