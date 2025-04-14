@@ -122,7 +122,7 @@ class BayesClassifier:
         
         # get a list of the individual tokens that occur in text
         tokens = self.tokenize(text)
-        print(tokens)
+        # print(tokens)
 
         # create some variables to store the positive and negative probability. since
         # we will be adding logs of probabilities, the initial values for the positive
@@ -143,12 +143,14 @@ class BayesClassifier:
         # of each probability for add one smoothing (so that we never have a probability
         # of 0)
         for token in tokens:
-            pos_score += math.log(self.pos_freqs / pos_denominator) + 1
-            neg_score += math.log(self.neg_freqs / neg_denominator) + 1
-        if pos_score > neg_score:
-            return "positive"
-        elif neg_score > pos_score:
-            return "negative"
+            pos_freqs = self.pos_freqs.get(token, 0) + 1
+            neg_freqs = self.neg_freqs.get(token, 0) + 1
+           # print(pos_freqs, neg_freqs)
+        
+            pos_score += math.log(pos_freqs / pos_denominator)
+            neg_score += math.log(neg_freqs / neg_denominator)
+
+           # print(pos_score, neg_score)
         
 
         # for debugging purposes, it may help to print the overall positive and negative
@@ -157,7 +159,10 @@ class BayesClassifier:
 
         # determine whether positive or negative was more probable (i.e. which one was
         # larger)
-        
+        if pos_score > neg_score:
+            return "positive"
+        else:
+            return "negative"
 
         # return a string of "positive" or "negative"
 
@@ -292,8 +297,12 @@ if __name__ == "__main__":
     # # uncomment the below lines once you've implemented `classify`
     print("\nThe following should all be positive.")
     print(b.classify('I love computer science'))
-    # print(b.classify('this movie is fantastic'))
-    # print("\nThe following should all be negative.")
-    # print(b.classify('rainy days are the worst'))
-    # print(b.classify('computer science is terrible'))
+    print(b.classify('this movie is fantastic'))
+    print("\nThe following should all be negative.")
+    print(b.classify('rainy days are the worst'))
+    print(b.classify('computer science is terrible'))
+
+    print()
+    print(b.classify("intro to artificial intelligence is the best class"))
+    print(b.classify("not the best way to do this"))
     pass
