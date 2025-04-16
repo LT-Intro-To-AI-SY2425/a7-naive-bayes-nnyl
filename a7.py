@@ -78,7 +78,7 @@ class BayesClassifier:
             tokens = self.tokenize(text)
         # print(tokens)
 
-        filtered_tokens = [token for token in tokens if token not in stopwords]
+            filtered_tokens = [token for token in tokens if token not in stopwords]
 
         # we want to fill pos_freqs and neg_freqs with the correct counts of words from
         # their respective reviews
@@ -102,7 +102,16 @@ class BayesClassifier:
         # your life easier here. Write that function first then pass it your list of
         # tokens from the file and the appropriate dictionary
         
-
+        # print(self.pos_freqs["happy"])
+        # print(self.neg_freqs["happy"])
+        # print(self.pos_freqs["sad"])
+        # print(self.neg_freqs["sad"])
+        # print(self.pos_freqs["bad"])
+        # print(self.neg_freqs["bad"])
+        # print(self.pos_freqs["actor"])
+        # print(self.neg_freqs["actor"])
+        # print(self.pos_freqs["the"])
+        # print(self.neg_freqs["the"])
         # for debugging purposes, it might be useful to print out the tokens and their
         # frequencies for both the positive and negative dictionaries
         
@@ -129,7 +138,7 @@ class BayesClassifier:
         
         # get a list of the individual tokens that occur in text
         tokens = self.tokenize(text)
-        # print(tokens)
+        print(tokens)
 
         # create some variables to store the positive and negative probability. since
         # we will be adding logs of probabilities, the initial values for the positive
@@ -148,8 +157,11 @@ class BayesClassifier:
         # print(vocab)
         vocab_size = len(vocab)
 
+        # print(pos_denominator, neg_denominator)
+
         file = self.load_file("sorted_stoplist.txt")
-        stopwords = self.tokenize(file) 
+        stopwords = self.tokenize(file)
+
         # for each token in the text, calculate the probability of it occurring in a
         # postive document and in a negative document and add the logs of those to the
         # running sums. when calculating the probabilities, always add 1 to the numerator
@@ -164,12 +176,12 @@ class BayesClassifier:
                 pos_score += math.log(pos_freqs / (pos_denominator + vocab_size))
                 neg_score += math.log(neg_freqs / (neg_denominator + vocab_size))
 
-           # print(pos_score, neg_score)
         
 
         # for debugging purposes, it may help to print the overall positive and negative
         # probabilities
-        
+        print(f"Positive Probability: {pos_score}")
+        print(f"Negative Probabilty: {neg_score}")
 
         # determine whether positive or negative was more probable (i.e. which one was
         # larger)
@@ -316,7 +328,7 @@ if __name__ == "__main__":
     print(b.classify('rainy days are the worst'))
     print(b.classify('computer science is terrible'))
 
-    print()
-    print(b.classify("intro to artificial intelligence is the best class"))
-    print(b.classify("not the best way to do this"))
-    pass
+    print("\nThe following is to test out the method with each group's responses")
+    print(b.classify("Summer break is almost here.  I am super excited and I know that it's going to be the best"))
+    print(b.classify("The ice cream that they have at that place is phenomenal."))
+    print(b.classify("This new game looks good so far. I hope it really is that way!"))
