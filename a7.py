@@ -67,19 +67,21 @@ class BayesClassifier:
         # enumerate function, which loops over something and has an automatic counter.
         # write something like this to track progress (note the `# type: ignore` comment
         # which tells mypy we know better and it shouldn't complain at us on this line):
+        
         file = self.load_file("sorted_stoplist.txt")
         stopwords = self.tokenize(file)
         # print(stopwords)
        
+        
         for index, filename in enumerate(files, 1): # type: ignore
             print(f"Training on file {index} of {len(files)}")
         #     <the rest of your code for updating frequencies here>
             text = self.load_file(os.path.join(self.training_data_directory, filename))
             tokens = self.tokenize(text)
-        # print(tokens)
+            # print(tokens)
 
             filtered_tokens = [token for token in tokens if token not in stopwords]
-
+            # print(filtered_tokens)
         # we want to fill pos_freqs and neg_freqs with the correct counts of words from
         # their respective reviews
         
@@ -178,8 +180,7 @@ class BayesClassifier:
 
 
         # for debugging purposes, it may help to print the overall positive and negative
-        # probabilities
-        
+        # probabilities 
         print(f"Positive Probability: {pos_score}")
         print(f"Negative Probabilty: {neg_score}")
 
@@ -332,3 +333,13 @@ if __name__ == "__main__":
     print(b.classify("Summer break is almost here.  I am super excited and I know that it's going to be the best"))
     print(b.classify("The ice cream that they have at that place is phenomenal."))
     print(b.classify("This new game looks good so far. I hope it really is that way!"))
+    # negative sentiment strings
+    print(b.classify("I am nervous that I won't do well on the AP tests. I have studied, but I don't think I'll do that well"))
+    print(b.classify("That test was so hard yesterday. It didn't make any sense."))
+    print(b.classify("This burger is completely raw. That's really disgusting."))
+    # positive reviews
+    print(b.classify("AMAZING SCHOOL. I have more pride in this high school than in the college that I'm at rn. So much tradition and learning, located in a great city. Had some amazing teachers. shoutout to the marching band"))
+    print(b.classify("Foods are great.. We ate lobster, shrimp, salads, the place was so clean and our server she's really nice and friendly.. so everything's went well ;)"))
+    # negative reviews
+    print(b.classify("The school sucks, its dirty, staff is terrible, and teachers don't know how to teach at all. The head of security is fat as a whale and that can't even walk to the 3rd floor. I literally feel unsafe when I go there. You can't even use the bathrooms because of the smokers and pointless security that just talk together. Its just bad."))
+    print(b.classify("Ridiculous prices and smaller portions. No more, I'm done eating at this pitiful chain."))
