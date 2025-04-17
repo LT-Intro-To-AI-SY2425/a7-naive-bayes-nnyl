@@ -67,7 +67,6 @@ class BayesClassifier:
         # enumerate function, which loops over something and has an automatic counter.
         # write something like this to track progress (note the `# type: ignore` comment
         # which tells mypy we know better and it shouldn't complain at us on this line):
-        
         file = self.load_file("sorted_stoplist.txt")
         stopwords = self.tokenize(file)
         # print(stopwords)
@@ -92,10 +91,10 @@ class BayesClassifier:
         # positive frequency dictionary. If it is neither a postive or negative file,
         # ignore it and move to the next file (this is more just to be safe; we won't
         # test your code with neutral reviews)
-        if filename.startswith(self.pos_file_prefix):
-            self.update_dict(filtered_tokens, self.pos_freqs)
-        elif filename.startswith(self.neg_file_prefix):
-            self.update_dict(filtered_tokens, self.neg_freqs)
+            if filename.startswith(self.pos_file_prefix):
+                self.update_dict(filtered_tokens, self.pos_freqs)
+            elif filename.startswith(self.neg_file_prefix):
+                self.update_dict(filtered_tokens, self.neg_freqs)
 
 
         # Updating frequences: to update the frequencies for each file, you need to get
